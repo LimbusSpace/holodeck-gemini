@@ -1,0 +1,26 @@
+{
+  "scene_style": "cyberpunk",
+  "objects": [
+    {
+      "object_id": "test_bed_001",
+      "name": "cyberpunk bed",
+      "category": "furniture",
+      "size_m": [2.0, 1.6, 0.6],
+      "card_path": "tests/fixtures/bed_card.png"
+    },
+    {
+      "object_id": "test_chair_001",
+      "name": "cyberpunk chair",
+      "category": "furniture",
+      "size_m": [0.5, 0.5, 0.8],
+      "card_path": "tests/fixtures/chair_card.png"
+    },
+    {
+      "object_id": "test_lamp_001",
+      "name": "neon lamp",
+      "category": "lighting",
+      "size_m": [0.3, 0.3, 1.2],
+      "card_path": "tests/fixtures/lamp_card.png"
+    }
+  ]
+}

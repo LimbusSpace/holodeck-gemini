@@ -1,0 +1,101 @@
+{
+  "version": "1.0",
+  "contracts": {
+    "session_root": "workspace/sessions/<session_id>/",
+    "paths_are_relative_to_session_root": true,
+    "blender_naming_convention": "object_name_equals_id",
+    "primary_artifacts": {
+      "objects": "objects.json",
+      "constraints": "constraints_v1.json",
+      "layout_solution": "layout_solution_v1.json",
+      "dfs_trace": "dfs_trace_v1.json",
+      "asset_manifest": "asset_manifest.json",
+      "blender_object_map": "blender_object_map.json",
+      "renders_dir": "renders/",
+      "blender_scene": "blender_scene.blend"
+    }
+  },
+  "stages": [
+    {
+      "name": "scene_ref",
+      "summary": "Generate scene reference image/background context.",
+      "inputs": ["request.json"],
+      "outputs": ["scene_ref.png", "background.png"],
+      "retry_policy": { "rerunnable": true, "preferred_rerun": "holodeck build <TEXT> --only scene_ref --force --no-blendermcp --json" }
+    },
+    {
+      "name": "objects",
+      "summary": "Extract scene objects list.",
+      "inputs": ["request.json"],
+      "outputs": ["objects.json"],
+      "retry_policy": { "rerunnable": true, "preferred_rerun": "holodeck build <TEXT> --only objects --force --no-blendermcp --json" }
+    },
+    {
+      "name": "object_cards",
+      "summary": "Generate object cards (text/image) for each object.",
+      "inputs": ["objects.json"],
+      "outputs": ["object_cards/"],
+      "retry_policy": { "rerunnable": true, "preferred_rerun": "holodeck build <TEXT> --only object_cards --force --no-blendermcp --json" }
+    },
+    {
+      "name": "assets",
+      "summary": "Produce 3D assets and write asset_manifest.json.",
+      "inputs": ["object_cards/"],
+      "outputs": ["assets/", "asset_manifest.json"],
+      "retry_policy": { "rerunnable": true, "preferred_rerun": "holodeck build <TEXT> --only assets --force --no-blendermcp --json" }
+    },
+    {
+      "name": "constraints",
+      "summary": "Generate spatial constraints primitives.",
+      "inputs": ["objects.json"],
+      "outputs": ["constraints_v1.json"],
+      "retry_policy": { "rerunnable": true, "preferred_rerun": "holodeck build <TEXT> --only constraints --force --no-blendermcp --json" }
+    },
+    {
+      "name": "layout",
+      "summary": "Solve layout using DFS solver; produce layout_solution_v1.json (or dfs_trace on failure).",
+      "inputs": ["constraints_v1.json", "asset_manifest.json"],
+      "outputs": ["layout_solution_v1.json"],
+      "failure_outputs": ["dfs_trace_v1.json"],
+      "retry_policy": { "rerunnable": true, "preferred_rerun": "holodeck build <TEXT> --only layout --force --no-blendermcp --json" }
+    },
+    {
+      "name": "blender_apply",
+      "summary": "Import assets + apply layout in Blender via blender-mcp; optionally save .blend; take screenshot.",
+      "inputs": ["asset_manifest.json", "layout_solution_v1.json", "blender_object_map.json"],
+      "outputs": ["blender_scene.blend", "renders/"],
+      "execution": {
+        "mode": "blender-mcp",
+        "required_tools": [
+          "mcp__blender__get_scene_info",
+          "mcp__blender__execute_blender_code",
+          "mcp__blender__get_viewport_screenshot"
+        ]
+      }
+    }
+  ],
+  "pipelines": {
+    "local": {
+      "summary": "Local generation: ComfyUI → SF3D → layout → blender-mcp apply.",
+      "cli_command": "holodeck build <TEXT> --until layout --no-blendermcp --json",
+      "stages": ["scene_ref", "objects", "object_cards", "assets", "constraints", "layout", "blender_apply"],
+      "providers": {
+        "image_generation": "local_comfyui",
+        "asset_generation": "local_sf3d",
+        "blender_execution": "blender_mcp"
+      }
+    },
+    "cloud": {
+      "summary": "Cloud assets via blender-mcp: build objects/cards → generate/import/export assets → layout → apply.",
+      "stages": ["objects", "object_cards", "assets", "constraints", "layout", "blender_apply"],
+      "providers": {
+        "asset_generation_priority": ["cloud_hunyuan3d", "cloud_hyper3d", "sketchfab_download"],
+        "materials_optional": ["polyhaven"],
+        "blender_execution": "blender_mcp"
+      },
+      "notes": [
+        "In cloud pipeline, assets stage is executed in Blender via blender-mcp, then exported to session assets/ and asset_manifest.json is written."
+      ]
+    }
+  }
+}

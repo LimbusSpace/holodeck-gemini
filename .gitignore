@@ -1,0 +1,71 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+.venv*/
+
+# Environment files
+.env
+.env.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Workspace (exclude all generated data)
+workspace/
+
+# Logs
+*.log
+
+# Test coverage
+.coverage
+htmlcov/
+
+# Claude Code temporary working directories
+tmpclaude-*-cwd
+
+# Workspace temporary files
+workspace/temp/
+workspace/sessions/*/temp/
+workspace/sessions/*/cache/
+
+# Blender temporary files
+*.blend1
+*.blend2
+*.blend#
+
+# Generated images (temporary)
+generated_image_*.png
+
+# Temporary test/debug scripts
+debug_*.py
+fix_*.py
+test_*.py
+!tests/
+
+# Build logs and outputs
+*.log
+build_output*.log
+build_result.json
+stdout.txt
+stderr.txt
+
+# Temporary documentation
+*_SUMMARY.md
+*_ANALYSIS.md
+
+# Bundle files
+*.bundle

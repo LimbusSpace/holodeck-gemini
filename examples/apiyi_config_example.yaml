@@ -1,0 +1,26 @@
+# APIYi 配置示例
+# 将此文件复制为 ~/.holodeck/config.yaml 或项目根目录的 .env 文件
+
+# APIYi (Gemini-3-Pro-Image) 配置
+APIAYI_API_KEY: "sk-your-api-key"  # 替换为你的实际API密钥
+APIAYI_BASE_URL: "https://api.apiyi.com/v1beta/models"
+APIAYI_MODEL: "gemini-3-pro-image-preview"
+APIAYI_TIMEOUT: 300  # 5分钟超时，适用于2K图像生成
+
+# 其他后端配置示例
+HUNYUAN_API_KEY: "your-hunyuan-api-key"
+COMFYUI_SERVER_ADDRESS: "127.0.0.1:8188"
+OPENAI_API_KEY: "your-openai-api-key"
+
+# 通用配置
+DEFAULT_IMAGE_BACKEND: "apiyi"  # 设置APIAyi为默认后端
+MAX_IMAGE_GENERATION_TIME: 600
+ENABLE_PERFORMANCE_LOGGING: true
+
+# 监控配置
+MONITORING_ENABLED: true
+METRICS_PORT: 8080
+
+# 日志配置
+LOG_LEVEL: "INFO"
+LOG_FILE: "holodeck.log"

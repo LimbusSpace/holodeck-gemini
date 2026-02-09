@@ -1,0 +1,6 @@
+template: |
+  {text}. Render in {style} style. 3-D view: x->right, y->backward, z->up. Well-lit, no extra objects.
+
+description: |
+  Scene reference image generation prompt.
+  Exactly matches HOLODECK 2.0 paper Prompt 1 (Listing 1).

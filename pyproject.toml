@@ -1,0 +1,53 @@
+[project]
+name = "holodeck-gemini"
+version = "0.1.0"
+description = "Holodeck-like 3D scene build/edit workflows via Gemini CLI + MCP"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "pydantic>=2.5.0",
+    "aiofiles>=23.0.0",
+    "mcp>=1.0.0",
+    "python-dotenv>=1.0.0",
+    "pillow>=10.0.0",
+    "numpy>=1.24.0",
+    "websocket-client>=1.6.0",  # ComfyUI WebSocket
+    "requests>=2.31.0",        # ComfyUI HTTP API
+    "trimesh>=4.0.0",          # GLB geometry processing
+    "tencentcloud-sdk-python>=3.0.1200",  # Hunyuan Image API
+    "pytest>=7.4.0",
+    "pytest-asyncio>=0.21.0",
+    "ruff>=0.1.0",
+    "black>=23.0.0",
+    "mypy>=1.5.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project.scripts]
+holodeck = "holodeck_cli.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["holodeck_core", "servers", "holodeck_cli"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+
+[tool.black]
+line-length = 88
+target-version = ['py311']
+
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+
+[tool.mypy]
+python_version = "3.11"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true

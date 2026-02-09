@@ -1,0 +1,57 @@
+<div class="card p-8">
+    <div class="flex items-center mb-6">
+        <span class="text-green-400 text-2xl mr-3">&#10003;</span>
+        <h2 class="text-xl font-semibold text-gray-200">Generation Complete</h2>
+    </div>
+
+    {% if data.scene_ref_path %}
+    <div class="mb-8">
+        <h3 class="section-title">Reference Image</h3>
+        <img src="/image/{{ session_id }}/scene_ref.png" alt="Scene Reference"
+             class="rounded-xl max-w-full shadow-lg border border-white/5">
+    </div>
+    {% endif %}
+
+    {% if data.objects %}
+    <div class="mb-8">
+        <h3 class="section-title">Objects <span class="text-gray-500 font-normal">({{ data.objects|length }})</span></h3>
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+            {% for obj in data.objects %}
+            <div class="object-card">
+                <span class="font-medium text-gray-200">{{ obj.name }}</span>
+                <span class="text-gray-500 text-xs font-mono mt-1">{{ obj.id }}</span>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    {% if data.constraints %}
+    <div class="mb-8">
+        <h3 class="section-title">Constraints</h3>
+        <pre class="code-block">{{ data.constraints | tojson(indent=2) }}</pre>
+    </div>
+    {% endif %}
+
+    {% if data.layout %}
+    <div class="mb-8">
+        <h3 class="section-title">Layout</h3>
+        <pre class="code-block">{{ data.layout | tojson(indent=2) }}</pre>
+    </div>
+    {% endif %}
+
+    {% if data.errors %}
+    <div class="error-box">
+        <h3 class="text-red-400 font-medium mb-2">Errors</h3>
+        {% for err in data.errors %}
+        <div class="text-sm text-red-300">{{ err }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if data.metrics %}
+    <div class="mt-6 pt-6 border-t border-white/5 text-gray-500 text-sm">
+        Total time: {{ "%.2f"|format(data.metrics.get('total_time', 0)) }}s
+    </div>
+    {% endif %}
+</div>

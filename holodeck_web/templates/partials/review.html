@@ -1,0 +1,36 @@
+<div class="bg-gray-800 border border-yellow-500 rounded-lg p-6 mb-4">
+    <h3 class="text-yellow-400 font-semibold mb-4">审查阶段: {{ stage }}</h3>
+
+    <div class="space-y-4 mb-6">
+        {% for output in outputs %}
+            {% if output.type == "image" %}
+                <div class="border border-gray-700 rounded p-2">
+                    <img src="{{ output.path }}" alt="{{ stage }} output" class="max-w-full h-auto rounded">
+                </div>
+            {% elif output.type == "json" %}
+                <div class="border border-gray-700 rounded p-2 bg-gray-900">
+                    <pre class="text-xs text-green-400 overflow-x-auto max-h-64 overflow-y-auto">{{ output.content }}</pre>
+                </div>
+            {% elif output.type == "model" %}
+                <div class="border border-gray-700 rounded p-2">
+                    <a href="{{ output.path }}" class="text-blue-400 hover:underline">{{ output.path.split('/')[-1] }}</a>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <div class="flex gap-4">
+        <form hx-post="/review/{{ session_id }}/{{ stage }}" hx-swap="outerHTML" class="inline">
+            <input type="hidden" name="decision" value="pass">
+            <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded">
+                Pass (继续)
+            </button>
+        </form>
+        <form hx-post="/review/{{ session_id }}/{{ stage }}" hx-swap="outerHTML" class="inline">
+            <input type="hidden" name="decision" value="retry">
+            <button type="submit" class="bg-yellow-600 hover:bg-yellow-700 text-white px-6 py-2 rounded">
+                Retry (重试)
+            </button>
+        </form>
+    </div>
+</div>

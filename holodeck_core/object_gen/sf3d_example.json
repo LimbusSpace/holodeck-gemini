@@ -1,0 +1,69 @@
+{
+  "1": {
+    "inputs": {
+      "image": "axe.png",
+      "upload": "image"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "加载图像"
+    }
+  },
+  "6": {
+    "inputs": {
+      "mask": [
+        "1",
+        1
+      ]
+    },
+    "class_type": "InvertMask",
+    "_meta": {
+      "title": "反转遮罩"
+    }
+  },
+  "7": {
+    "inputs": {},
+    "class_type": "StableFast3DLoader",
+    "_meta": {
+      "title": "Stable Fast 3D Loader"
+    }
+  },
+  "8": {
+    "inputs": {
+      "foreground_ratio": 0.85,
+      "texture_resolution": 1024,
+      "remesh": "triangle",
+      "vertex_count": -1,
+      "model": [
+        "7",
+        0
+      ],
+      "image": [
+        "1",
+        0
+      ],
+      "mask": [
+        "6",
+        0
+      ]
+    },
+    "class_type": "StableFast3DSampler",
+    "_meta": {
+      "title": "Stable Fast 3D Sampler"
+    }
+  },
+  "9": {
+    "inputs": {
+      "filename_prefix": "SF3D",
+      "preview": null,
+      "mesh": [
+        "8",
+        0
+      ]
+    },
+    "class_type": "StableFast3DSave",
+    "_meta": {
+      "title": "Stable Fast 3D Save"
+    }
+  }
+}

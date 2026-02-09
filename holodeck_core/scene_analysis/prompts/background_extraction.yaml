@@ -1,0 +1,15 @@
+template: |
+  Replace the entire image with ONE seamless, tileable PNG
+  of the main floor/ground texture.
+
+  Instructions (from HOLODECK 2.0 Listing 6):
+  - Ignore all objects, walls, ceiling
+  - Extract ONLY the floor/ground pattern
+  - Make it homogeneous and repeating smoothly
+  - NO transparency - solid texture only
+  - Must be tileable/seamless
+
+description: |
+  Background texture extraction prompt.
+  Aligned with HOLODECK 2.0 paper Listing 6.
+  Uses generative approach for better tileability.

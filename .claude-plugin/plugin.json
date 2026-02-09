@@ -1,0 +1,70 @@
+{
+  "name": "holodeck",
+  "version": "0.1.0",
+  "description": "Holodeck-like 3D scene build/edit workflows via Gemini CLI + MCP",
+  "author": "Holodeck-Gemini Team",
+  "homepage": "https://github.com/holodeck-gemini/holodeck-gemini",
+  "repository": "https://github.com/holodeck-gemini/holodeck-gemini.git",
+  "license": "MIT",
+  "keywords": ["3d", "scene", "generation", "mcp", "gemini-cli"],
+  "engines": {
+    "gemini-cli": ">=1.0.0"
+  },
+  "categories": ["development", "3d", "ai"],
+  "mcpServers": {
+    "holodeck-tools": {
+      "command": "python",
+      "args": ["-m", "servers.holodeck_mcp.server"],
+      "env": {
+        "HOLODECK_ROOT": "${CLAUDE_PLUGIN_ROOT}"
+      }
+    }
+  },
+  "capabilities": [
+    "scene-generation",
+    "object-cards",
+    "spatial-constraints",
+    "3d-asset-generation",
+    "scene-editing",
+    "rendering"
+  ],
+  "providedTools": {
+    "session": [
+      "session.create",
+      "session.load",
+      "session.list",
+      "session.snapshot",
+      "session.delete",
+      "session.update_status"
+    ],
+    "scene-analysis": [
+      "scene.generate_reference_image",
+      "scene.extract_objects",
+      "scene.generate_object_cards",
+      "scene.quality_control",
+      "scene.extract_background"
+    ],
+    "object-generation": [
+      "object.generate_3d",
+      "object.normalize_asset",
+      "object.validate_asset"
+    ],
+    "scene-layout": [
+      "layout.generate_constraints",
+      "layout.solve_dfs",
+      "layout.validate_solution"
+    ],
+    "blender": [
+      "blender.assemble_scene",
+      "blender.render",
+      "blender.export"
+    ],
+    "editing": [
+      "edit.parse_feedback",
+      "edit.apply_layout",
+      "edit.replace_asset",
+      "edit.add_object",
+      "edit.delete_object"
+    ]
+  }
+}

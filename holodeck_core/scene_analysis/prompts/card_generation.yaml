@@ -1,0 +1,17 @@
+template: |
+  Generate ONE PNG image of an isolated front-view {object_name}
+  with transparent background.
+
+  Style: consistent with reference scene
+  Description: {visual_desc}
+
+  Requirements:
+  - Single object only
+  - Front view, centered
+  - Transparent background (PNG)
+  - No shadows/reflections
+
+description: |
+  Object card generation prompt.
+  Aligned with HOLODECK 2.0 paper Listing 4.
+  Minimalist approach to maintain style consistency.

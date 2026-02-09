@@ -1,0 +1,8 @@
+<div class="grid grid-cols-2 gap-2">
+    {% for obj in objects %}
+    <div class="bg-gray-700 p-2 rounded text-sm">
+        <span class="font-medium">{{ obj.name }}</span>
+        <span class="text-gray-400 text-xs block">{{ obj.id }}</span>
+    </div>
+    {% endfor %}
+</div>

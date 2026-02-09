@@ -1,0 +1,351 @@
+# Holodeck-Claude 完整项目结构树
+
+## 📁 项目根目录
+
+```
+holodeck-claude/
+├── .claude-plugin/                 # Claude Code插件配置
+│   └── plugin.json                 # 插件清单
+│
+├── holodeck_core/                  # 核心Python库 (业务逻辑层)
+│   ├── __init__.py
+│   ├── schemas/                    # 数据模型层 (18个Pydantic Schema)
+│   │   ├── __init__.py
+│   │   ├── session.py               # Session管理
+│   │   ├── scene_objects.py         # 场景对象
+│   │   ├── constraints.py           # 空间约束
+│   │   ├── layout.py               # 布局求解
+│   │   ├── object_cards.py          # 物体卡片
+│   │   ├── qc_reports.py            # 质量控制
+│   │   ├── asset_metadata.py        # 资产元数据
+│   │   ├── edit_history.py          # 编辑历史
+│   │   └── rendering.py             # 渲染配置
+│   │
+│   ├── storage/                     # 存储层
+│   │   ├── __init__.py
+│   │   ├── file_storage.py          # 文件操作
+│   │   ├── session_manager.py       # Session管理
+│   │   └── workspace_manager.py     # 工作空间管理
+│   │
+│   ├── object_gen/                  # 3D资产生成模块
+│   │   ├── __init__.py
+│   │   ├── asset_generator.py
+│   │   ├── asset_manager.py
+│   │   ├── cache.py
+│   │   ├── sf3d_client.py
+│   │   ├── normalizers.py
+│   │   └── material_manager.py      # PBR材质管理 [最新完成]
+│   │
+│   ├── scene_analysis/              # 场景分析模块
+│   │   ├── __init__.py
+│   │   ├── clients/                 # API客户端
+│   │   │   ├── __init__.py
+│   │   │   ├── hybrid_client.py
+│   │   │   └── openai_client.py
+│   │   └── prompts/                # 提示模板
+│   │       ├── __init__.py
+│   │       ├── background_extraction.yaml
+│   │       ├── card_generation.yaml
+│   │       ├── object_extraction.yaml
+│   │       ├── qc_evaluation.yaml
+│   │       ├── scene_reference.yaml
+│   │       └── templates.py
+│   │
+│   ├── scene_gen/                   # 场景生成模块 (DFS求解器)
+│   │   ├── __init__.py
+│   │   ├── constraint_primitives.py
+│   │   ├── dfs_solver.py
+│   │   ├── collision_detection.py
+│   │   ├── failure_analysis.py
+│   │   └── constraint_generator.py
+│   │
+│   ├── editing/                     # 编辑功能模块
+│   │   ├── __init__.py
+│   │   ├── asset_editor.py
+│   │   ├── constraint_manager.py
+│   │   ├── edit_engine.py
+│   │   └── feedback_parser.py
+│   │
+│   ├── blender/                     # Blender集成模块
+│   │   ├── __init__.py
+│   │   ├── camera_manager.py
+│   │   ├── material_manager.py
+│   │   ├── render_engine.py
+│   │   └── scene_assembler.py
+│   │
+│   └── image_generation/            # 图像生成模块
+│       ├── __init__.py
+│       ├── comfyui_client.py
+│       ├── image_manager.py
+│       └── workflows.py
+│
+├── servers/                         # MCP服务器层
+│   └── holodeck_mcp/
+│       ├── __init__.py
+│       ├── server.py                # MCP服务器主入口
+│       ├── tool_registry.py         # 工具注册系统
+│       └── tools/                   # MCP工具实现
+│           ├── __init__.py
+│           ├── session_tools.py
+│           ├── scene_analysis_tools.py
+│           ├── asset_gen_tools.py
+│           ├── edit_tools.py
+│           └── scene_analysis_tools_old.py
+│
+├── commands/                        # Claude Code命令定义
+│   ├── holodeck_build.md
+│   ├── holodeck_edit.md
+│   └── holodeck_replay.md
+│
+├── skills/                          # Agent Skills工作流规范
+│   ├── holodeck-build/
+│   │   └── SKILL.md
+│   ├── holodeck-edit/
+│   │   └── SKILL.md
+│   └── holodeck-debug/
+│       └── SKILL.md
+│
+├── tests/                           # 测试套件
+│   ├── __init__.py
+│   ├── fixtures/
+│   ├── test_schemas.py
+│   ├── test_session_manager.py
+│   ├── test_asset_metadata.py
+│   ├── test_object_cards.py
+│   ├── test_qc_reports.py
+│   ├── test_enhanced_schemas.py
+│   ├── test_integration.py
+│   └── test_blender_integration.py  # Blender集成测试 [最新]
+│
+├── config/                          # 配置文件
+│   └── examples/
+│
+├── runtime/                         # 运行时环境
+│   ├── asset_worker/
+│   ├── blender_worker/
+│   └── solver_worker/
+│
+├── workspace/                       # 工作空间 (运行时数据)
+│   ├── caches/
+│   │   ├── generated_assets/
+│   │   └── image_hashes/
+│   ├── sessions/                   # 会话数据存储
+│   └── temp/
+│
+├── docs/                            # 文档
+│   └── reference/                  # 参考文档
+│
+├── pyproject.toml                   # 项目配置文件
+├── README.md                        # 项目说明
+├── development-log.md               # 开发日志
+├── .mcp.json                        # MCP服务器配置 [当前: 仅blender]
+└── uv.lock                          # 依赖锁定文件
+```
+
+## 📊 项目统计
+
+- **总文件数**: 317
+- **Python源码**: 76
+- **JSON配置文件**: 81
+- **Markdown文档**: 15
+- **Pydantic Schema**: 18
+- **MCP工具**: 6
+- **Agent Skills**: 3
+- **活跃MCP服务**: 1 (blender)
+- **待修复MCP服务**: 1 (holodeck-mcp)
+
+## 🏗️ 架构层次
+
+### 1. 插件层 (Plugin Layer)
+- **.claude-plugin/**: Claude Code插件配置
+- **commands/**: 用户命令定义
+- **skills/**: Agent Skills工作流规范
+- **.mcp.json**: MCP服务器配置 [当前状态: 仅启用blender]
+
+### 2. 工具层 (Tool Layer)
+- **servers/holodeck_mcp/**: MCP协议实现 [状态: 代码完整，临时禁用]
+- **blender**: 外部Blender MCP服务 [状态: 活跃]
+- 暴露可执行的Python工具给Claude Code
+
+### 3. 核心层 (Core Layer)
+- **holodeck_core/**: 纯Python业务逻辑
+- 包含所有核心功能模块
+- 可独立测试和复用
+
+### 4. 数据层 (Data Layer)
+- **schemas/**: Pydantic数据模型
+- 定义所有中间数据结构和协议
+
+### 5. 存储层 (Storage Layer)
+- **storage/**: 文件和工作空间管理
+- Session持久化和数据读写
+
+### 6. 运行时层 (Runtime Layer)
+- **runtime/**: Worker进程管理
+- 重型任务的后台执行
+
+## 🎯 核心功能模块
+
+### 3D资产生成 (object_gen/)
+```
+object_gen/
+├── asset_generator.py     # 资产生成器
+├── asset_manager.py       # 资产管理器
+├── cache.py               # 双层缓存系统
+├── sf3d_client.py         # SF3D客户端
+├── normalizers.py         # GLB归一化
+└── material_manager.py    # PBR材质管理 ✨
+```
+
+**最新完成**: MaterialManager - 完整的PBR材质管理系统
+- 支持所有标准PBR纹理类型
+- Blender深度集成
+- 完整的测试覆盖
+
+### 场景分析 (scene_analysis/)
+```
+scene_analysis/
+├── clients/               # API客户端
+│   ├── openai_client.py   # OpenAI集成
+│   └── hybrid_client.py   # 混合客户端
+└── prompts/               # 提示工程模板
+    ├── scene_reference.yaml
+    ├── object_extraction.yaml
+    ├── card_generation.yaml
+    └── qc_evaluation.yaml
+```
+
+### 场景生成 (scene_gen/)
+```
+scene_gen/
+├── constraint_primitives.py  # 空间约束原语
+├── dfs_solver.py            # DFS求解器
+├── collision_detection.py   # 碰撞检测
+├── failure_analysis.py      # 失败分析
+└── constraint_generator.py  # 约束生成器
+```
+
+### 编辑功能 (editing/)
+```
+editing/
+├── asset_editor.py        # 资产编辑器
+├── constraint_manager.py  # 约束管理
+├── edit_engine.py         # 编辑引擎
+└── feedback_parser.py     # 反馈解析器
+```
+
+### Blender集成 (blender/)
+```
+blender/
+├── camera_manager.py      # 相机管理
+├── material_manager.py    # 材质管理
+├── render_engine.py       # 渲染引擎
+└── scene_assembler.py     # 场景组装器
+```
+
+## 🔧 MCP工具接口
+
+### Session工具
+- `session.create()` - 创建新会话
+- `session.load()` - 加载会话数据
+- `session.list()` - 列出所有会话
+- `session.snapshot()` - 创建快照
+
+### 场景分析工具
+- `scene.generate_ref_image()` - 生成场景参考图
+- `scene.extract_objects()` - 提取物体
+- `scene.generate_object_cards()` - 生成物体卡片
+
+### 资产生成工具
+- `asset.generate_from_card()` - 从卡片生成资产
+- `asset.batch_generate()` - 批量生成
+- `asset.normalize()` - 资产归一化
+
+### 场景生成工具
+- `layout.generate_constraints()` - 生成约束
+- `layout.solve_dfs()` - DFS求解
+- `layout.validate()` - 布局验证
+
+### Blender工具
+- `blender.assemble()` - 场景组装
+- `blender.render()` - 渲染输出
+
+### 编辑工具
+- `edit.parse_feedback()` - 解析反馈
+- `edit.apply_layout()` - 应用布局编辑
+- `edit.replace_asset()` - 替换资产
+
+## 🧪 测试架构
+
+### 单元测试
+- Schema验证测试
+- Session管理测试
+- 工具函数测试
+
+### 集成测试
+- MCP工具集成测试
+- Blender集成测试
+- 端到端流程测试
+
+### 性能测试
+- 资产生成性能测试
+- 缓存系统性能测试
+- 并发处理测试
+
+## 📁 数据流
+
+```
+用户请求
+    ↓
+Session创建 (storage/)
+    ↓
+场景分析 (scene_analysis/)
+    ↓
+物体卡片生成
+    ↓
+3D资产生成 (object_gen/)
+    ↓
+约束生成 (scene_gen/)
+    ↓
+DFS布局求解
+    ↓
+Blender组装渲染 (blender/)
+    ↓
+输出结果
+```
+
+## 🔄 编辑流程
+
+```
+用户反馈
+    ↓
+反馈解析 (editing/)
+    ↓
+聚焦对象识别
+    ↓
+约束增量更新
+    ↓
+局部重求解
+    ↓
+资产替换/更新
+    ↓
+重新渲染
+```
+
+## 🎨 技术栈
+
+- **Python 3.11+**: 核心编程语言
+- **Pydantic v2**: 数据验证和序列化
+- **Claude Code**: CLI和插件系统
+- **MCP协议**: 工具暴露标准
+- **Blender**: 3D渲染和可视化
+- **OpenAI API**: GPT集成
+- **ComfyUI**: 图像生成
+- **SF3D**: 3D资产生成
+
+---
+
+**最后更新**: 2026年1月22日
+**项目状态**: 核心功能完成，Blender集成就绪，MCP配置优化
+**完成度**: 约 85%
+**MCP状态**: holodeck-mcp代码完整但临时禁用，blender活跃运行

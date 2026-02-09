@@ -1,0 +1,192 @@
+# Holodeck 监控告警系统配置示例
+
+# 监控配置
+monitoring:
+  # 启用Prometheus指标导出
+  enable_prometheus: true
+
+  # 指标导出端口
+  metrics_port: 8080
+
+  # 指标更新间隔（秒）
+  update_interval: 15
+
+  # 告警检查间隔（秒）
+  alert_check_interval: 60
+
+# 告警配置
+alerting:
+  # 默认告警规则
+  default_rules:
+    - name: "high_error_rate"
+      condition: "error_rate > 0.1"
+      threshold: 0.1
+      severity: "critical"
+      description: "Error rate is above 10%"
+      enabled: true
+
+    - name: "high_memory_usage"
+      condition: "memory_usage > 3221225472"
+      threshold: 3221225472  # 3GB
+      severity: "warning"
+      description: "Memory usage is above 3GB"
+      enabled: true
+
+    - name: "slow_requests"
+      condition: "request_duration > 30"
+      threshold: 30.0
+      severity: "warning"
+      description: "Request duration is above 30 seconds"
+      enabled: true
+
+  # 通知渠道配置
+  channels:
+    # 邮件通知
+    email:
+      enabled: false
+      type: "email"
+      smtp_server: "smtp.gmail.com"
+      smtp_port: 587
+      username: "your-email@gmail.com"
+      password: "your-app-password"
+      from_email: "holodeck@yourcompany.com"
+      to_emails:
+        - "admin@yourcompany.com"
+        - "dev-team@yourcompany.com"
+
+    # Webhook通知
+    webhook:
+      enabled: true
+      type: "webhook"
+      url: "https://your-api.com/holodeck-alerts"
+      headers:
+        Authorization: "Bearer your-webhook-token"
+        Content-Type: "application/json"
+
+    # Slack通知
+    slack:
+      enabled: false
+      type: "slack"
+      webhook_url: "https://hooks.slack.com/services/YOUR/SLACK/WEBHOOK"
+
+    # Microsoft Teams通知
+    teams:
+      enabled: false
+      type: "teams"
+      webhook_url: "https://your-organization.webhook.office.com/webhookb2/your-teams-webhook"
+
+# 性能监控配置
+performance:
+  # 缓存配置
+  cache:
+    enabled: true
+    max_size_mb: 200
+    ttl_seconds: 3600
+    eviction_policy: "LRU"
+
+  # 并发配置
+  concurrency:
+    max_workers: 8
+    thread_pool_size: 16
+    queue_size: 1000
+
+  # 内存配置
+  memory:
+    monitoring: true
+    max_memory_mb: 2048
+    gc_threshold: 0.8
+    gc_frequency: 300
+
+# 日志配置
+logging:
+  level: "INFO"
+  file_rotation: "100MB"
+  retention_days: 30
+
+  # 性能日志
+  performance_logging: true
+
+  # 详细日志
+  detailed_logging: false
+
+# 健康检查配置
+health_check:
+  # 检查间隔
+  check_interval: 30
+
+  # 检查项
+  checks:
+    memory:
+      enabled: true
+      threshold_mb: 1024
+
+    cache:
+      enabled: true
+      min_hit_ratio: 0.3
+
+    performance:
+      enabled: true
+      max_avg_duration: 10.0
+
+    disk_space:
+      enabled: true
+      min_free_gb: 5
+
+# 集成配置
+integrations:
+  # Prometheus配置
+  prometheus:
+    enabled: true
+    port: 8080
+    path: "/metrics"
+
+  # Grafana配置
+  grafana:
+    enabled: false
+    url: "http://localhost:3000"
+    api_key: "your-grafana-api-key"
+    dashboard_id: "holodeck-monitoring"
+
+  # ELK Stack配置
+  elk:
+    enabled: false
+    elasticsearch_host: "localhost:9200"
+    logstash_host: "localhost:5044"
+    index_prefix: "holodeck-logs"
+
+# 自动修复配置
+auto_remediation:
+  enabled: false
+
+  actions:
+    # 内存过高时自动清理缓存
+    high_memory:
+      enabled: true
+      threshold_mb: 1500
+      action: "clear_cache"
+
+    # 缓存命中率过低时优化
+    low_cache_hit_ratio:
+      enabled: true
+      threshold: 0.2
+      action: "optimize_cache"
+
+    # 错误率过高时重启服务
+    high_error_rate:
+      enabled: false
+      threshold: 0.2
+      action: "restart_service"
+
+# 示例使用
+#
+# 1. 将此配置保存为 ~/.holodeck/monitoring.yaml
+# 2. 在主要配置中引用:
+#    monitoring_config: "~/.holodeck/monitoring.yaml"
+#
+# 3. 启动监控:
+#    holodeck debug monitoring status
+#    holodeck debug alerts status
+#
+# 4. 访问指标:
+#    curl http://localhost:8080/metrics
+#    curl http://localhost:8080/health

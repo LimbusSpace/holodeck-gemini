@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Holodeck Web</title>
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.10/dist/ext/sse.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body class="min-h-screen bg-gradient-to-br from-slate-900 via-purple-950 to-slate-900 text-gray-100">
+    <div class="container mx-auto px-4 py-12 max-w-4xl">
+        <header class="mb-10 text-center">
+            <h1 class="text-4xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+                Holodeck
+            </h1>
+            <p class="text-gray-400 mt-2">Text-to-3D Scene Generation</p>
+        </header>
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

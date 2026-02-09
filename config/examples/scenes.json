@@ -1,0 +1,56 @@
+{
+  "examples": [
+    {
+        "name": "Cozy Bedroom",
+        "description": "A cozy modern bedroom with essential furniture",
+        "text": "A cozy modern bedroom with a king bed, two matching nightstands with table lamps, and a full-length mirror against the wall.",
+        "style": "modern minimalist",
+        "expected_objects": 5,
+        "complexity": "low"
+    },
+    {
+        "name": "Living Room Entertainment",
+        "description": "A sophisticated living room centered around entertainment system",
+        "text": "A spacious living room with an L-shaped sectional sofa, a sleek media console supporting a 65-inch TV, glass coffee table, and accent chairs.",
+        "style": "contemporary",
+        "expected_objects": 8,
+        "complexity": "medium"
+    },
+    {
+        "name": "Home Office Productivity",
+        "description": "Efficient home office setup for focused work",
+        "text": "A functional home office with ergonomic desk, supportive office chair, bookshelf for reference materials, and dual monitor setup.",
+        "style": "functional minimalist",
+        "expected_objects": 6,
+        "complexity": "low"
+    },
+    {
+        "name": "Luxurious Master Suite",
+        "description": "High-end master bedroom suite with sitting area",
+        "text": "A luxurious master bedroom suite featuring a California king bed, chaise lounge, vanity table, walk-in closet area, and coordinated window treatments.",
+        "style": "luxurious traditional",
+        "expected_objects": 12,
+        "complexity": "high"
+    },
+    {
+        "name": "Studio Apartment Kitchen",
+        "description": "Efficient studio apartment with integrated kitchen",
+        "text": "A compact studio apartment with space-saving murphy bed, efficient kitchenette, foldable dining table, and creative storage solutions.",
+        "style": "space-efficient modern",
+        "expected_objects": 7,
+        "complexity": "medium"
+    }
+  ],
+  "styles": [
+    "realistic",
+    "contemporary",
+    "modern minimalist",
+    "industrial",
+    "scandinavian",
+    "bohemian",
+    "traditional",
+    "luxurious",
+    "space-efficient",
+    "rustic"
+  ]
+}

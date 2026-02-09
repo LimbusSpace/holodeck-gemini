@@ -1,0 +1,50 @@
+template: |
+  Based on scene description and reference image, extract visible objects.
+
+  Scene Description: "{scene_text}"
+  Reference Image: [attached]
+
+  CRITICAL CONSTRAINTS (from HOLODECK 2.0 Listing 2):
+  1. Origin (0,0,0) at centre of floor/ground
+  2. Size range: [0.1, 5.0] metres
+  3. MAIN objects only - ignore small decorative items
+  4. NO background elements:
+     × walls, windows, ceiling, sky, roads, terrain
+     × curtains, carpets as separate objects
+  5. NO components/parts:
+     × handles, knobs, drawers, legs
+     × faucets when bathtub present
+  6. Output ONLY valid JSON schema
+
+  Output must match this exact schema:
+  {{
+    "scene_style": "string",
+    "objects": [
+      {{
+        "object_id": "obj_001",
+        "name": "object_name",
+        "position": {{
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        }},
+        "rotation": {{
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        }},
+        "size": {{
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        }},
+        "visual_description": "detailed visual description"
+      }}
+    ]
+  }}
+
+description: |
+  Object extraction prompt.
+  Aligned with HOLODECK 2.0 paper Listing 2.
+  Includes all critical constraints to avoid
+  object explosion and maintain consistency.

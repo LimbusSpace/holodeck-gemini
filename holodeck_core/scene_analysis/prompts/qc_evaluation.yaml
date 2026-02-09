@@ -1,0 +1,21 @@
+template: |
+  Analyze these object cards and identify redundant components.
+
+  Rule (from HOLODECK 2.0 Listing 5): Component already part of main object → delete component card.
+
+  Examples:
+  - Bathtub with faucet → delete separate faucet card
+  - Table with legs → delete separate leg cards
+  - Lamp with cord → delete separate cord card
+
+  Output format:
+  {{
+    "delete_cards": ["faucet_001.png"],
+    "keep_cards": ["bathtub_001.png", ...],
+    "reasoning": "Brief explanation for each decision"
+  }}
+
+description: |
+  Quality control prompt for redundant component removal.
+  Aligned with HOLODECK 2.0 paper Listing 5.
+  Low-cost approach using text-only evaluation.
